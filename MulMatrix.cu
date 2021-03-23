@@ -117,6 +117,10 @@ int Compare(float *cpu_ref, float *gpu_ref, int nx, int ny)
 
 int main(int argc, char *argv[])
 {
+	LARGE_INTEGER begin_cpu, begin_gpu;
+	LARGE_INTEGER end_cpu, end_gpu;
+	LARGE_INTEGER freq_cpu, freq_gpu;
+	
 	// the size of the elements in the matrix can not be much larger....
 	// because of my worse GPU: nVIDIA GeForce GT710
 	unsigned int N = 1<<12; 
@@ -183,12 +187,28 @@ int main(int argc, char *argv[])
 		printf("[*] Compare : Matrix_ADD => the result are NOT the same...\n");
 	}
 
+	// begin to calculate the time consumption
+	QueryPerformanceCounter(&freq_cpu);
+	QueryPerformanceCounter(&begin_cpu);
+	
 	// test the matrix multiply
 	MulMatrixOnCPU(A, B, C, nx, ny);
+	// because of the GPU calculation use this function, so we should to make the same situation.
+	cudaDeviceSynchronize();
+
+	QueryPerformanceCounter(&end_cpu);
+	printf("CPU time consumption:%f ms\n", 1000 * (float)(end_cpu.QuadPart - begin_cpu.QuadPart) / (float)freq_cpu.QuadPart);
+
+	// begin to calculate the time consumption
+	QueryPerformanceCounter(&freq_gpu);
+	QueryPerformanceCounter(&begin_gpu);
 
 	// test the matrix multiply on GPU
 	MulMatrixOnGPU << <grid, block >> >(d_A, d_B, d_C, nx, ny);
 	cudaDeviceSynchronize();
+
+	QueryPerformanceCounter(&end_gpu);
+	printf("GPU time consumption:%f ms\n", 1000 * (float)(end_gpu.QuadPart - begin_gpu.QuadPart) / (float)freq_gpu.QuadPart);
 
 	cudaMemcpy(gpu_ref, d_C, sizeof(float)*N, cudaMemcpyDeviceToHost);
 
