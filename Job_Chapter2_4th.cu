@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
 	cudaDeviceProp deviceProp;
 	cudaGetDeviceProperties(&deviceProp, dev);
 	cudaSetDevice(dev);
-	int nx = 1 << 10;    // ´Ë´¦¶ÔÏÔ¿¨µÄÏÞÖÆ±È½ÏÃ÷ÏÔ£¬ÊéÖÐ¿ÉÒÔÈÃnxºÍny·Ö±ðÎª1<<14£¬ËùÒÔnx*ny = 1<<28£¬µ«ÊÇÎÒµÄÏÔ¿¨²»ÐÐ¡£
+	int nx = 1 << 10;    // æ­¤å¤„å¯¹æ˜¾å¡çš„é™åˆ¶æ¯”è¾ƒæ˜Žæ˜¾ï¼Œä¹¦ä¸­å¯ä»¥è®©nxå’Œnyåˆ†åˆ«ä¸º1<<14ï¼Œæ‰€ä»¥nx*ny = 1<<28ï¼Œä½†æ˜¯æˆ‘çš„æ˜¾å¡ä¸è¡Œã€‚
 	int ny = 1 << 10;
 	int nxy = nx * ny;
 	int nBytes = sizeof(float)*nxy;
