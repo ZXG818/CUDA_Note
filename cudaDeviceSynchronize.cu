@@ -32,7 +32,7 @@ int main(void)
 	cudaMemcpy(d_b, h_b, sizeof(int)* 4, cudaMemcpyHostToDevice);
 
 	AddArray << <grid, block >> >(d_a, d_b, d_c);
-	//cudaDeviceSynchronize(); // ǿ���豸�������໥ͬ����Ҫ��˺���������ɺ�CPU�ٽ��м��㣬�������飬����������ȥ����鿴�����
+	//cudaDeviceSynchronize(); // 强制设备与主机相互同步，要求核函数运算完成后，CPU再进行计算，可以试验，如果将此语句去掉后查看结果。
 	for (i = 0; i < 3; i++)
 	{
 		printf("CPU!\n");
