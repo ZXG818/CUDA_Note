@@ -304,7 +304,7 @@ int main(int argc, char *argv[])
 // 	  0.02%  24.400us         1  24.400us  24.400us  24.400us  cuDeviceTotalMem
 // 	  0.01%  15.300us         3  5.1000us  1.5000us  11.900us  cudaMemset
 // 	  0.00%  6.5000us         1  6.5000us  6.5000us  6.5000us  cuDeviceGetPCIBusId
-// 	  0.00%  2.6000us         3     866ns     200ns  2.2000us  cuDeviceGetCount
+// 	  0.00%  2.6000us         3     866ns     200ns  2.2000us  cuDeviceGetCountt
 // 	  0.00%  1.4000us         2     700ns     100ns  1.3000us  cuDeviceGet
 // 	  0.00%  1.4000us         1  1.4000us  1.4000us  1.4000us  cuDeviceGetName
 // 	  0.00 % 400ns         1     400ns     400ns     400ns  cuDeviceGetLuid
