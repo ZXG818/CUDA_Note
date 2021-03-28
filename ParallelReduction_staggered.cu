@@ -9,22 +9,22 @@
 void GenerateArray(int *A, int N)
 {
   int i;
-	for (i = 0; i < N; i++)
-	{
-		A[i] = i * 2;
-	}
+  for (i = 0; i < N; i++)
+  {
+    A[i] = i * 2;
+  }
 }
 
 // get the summary on CPU
 int SummaryOnCPU(int *A, int N)
 {
-	int sum = 0;
-	int i;
-	for (i = 0; i < N; i++)
-	{
-		sum += A[i];
-	}
-	return sum;
+  int sum = 0;
+  int i;
+  for (i = 0; i < N; i++)
+  {
+    sum += A[i];
+  }
+  return sum;
 }
 
 
@@ -34,26 +34,28 @@ int SummaryOnCPU(int *A, int N)
 //            int *in_arr : the array on the current block
 //            int *result : get the summary of the current block(in_arr)
 //            int N       : the number of the elemenets in the current block.
-__global__ void SummaryOnGPU_Neighboured(int *in_arr, int *result, int N)
+__global__ void SummaryOnGPU(int *in_arr, int *result, int N)
 {
-	int stride = 1;
-	int tid = threadIdx.x;
-	int idx = threadIdx.x + blockIdx.x * blockDim.x;
-	int *local_arr = in_arr + blockIdx.x * blockDim.x; // restrict the threads on the current block.
+  int stride = 1;
+  int tid = threadIdx.x;
+  int idx = threadIdx.x + blockIdx.x * blockDim.x;
+  int *local_arr = in_arr + blockIdx.x * blockDim.x; // restrict the threads on the current block.
 
-	if (idx >= N)
-	{
-		return;
-	}
+  if (idx >= N)
+  {
+    return;
+  }
 
-	// begin to get the neighboured summary on GPU
-	// caution: blockDim.x means the number of the threads which are in the current block.
-	for (stride = 1; stride < blockDim.x; stride *= 2){
-    if (tid % (stride * 2) == 0){
+  // begin to get the neighboured summary on GPU
+  // caution: blockDim.x means the number of the threads which are in the current block.
+  for (stride = 1; stride < blockDim.x; stride *= 2)
+  {
+    if (tid % (stride * 2) == 0)
+    {
       local_arr[tid] += local_arr[tid + stride];
     }
     __syncthreads();  // let the threads synchronized in the current block.
-	}
+  }
   if (tid == 0)
   {
     result[blockIdx.x] = local_arr[0];
