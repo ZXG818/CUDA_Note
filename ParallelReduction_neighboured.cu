@@ -116,3 +116,7 @@ int main(int argc, char *argv[])
   free(h_result);
   return 0;
 }
+// result:
+// The summary on GPU is : 1047552
+// The summary on CPU is : 1047552
+// Please press any key to continue...
