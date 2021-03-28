@@ -60,6 +60,7 @@ __global__ void SummaryOnGPU_Neighboured(int *in_arr, int *result, int N)
   }
 }
 
+
 // use the staggered parallel reduction
 __global__ void SummaryOnGPU_Staggered(int *in_arr, int *result, int N)
 {
