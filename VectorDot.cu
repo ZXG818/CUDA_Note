@@ -56,7 +56,6 @@ __global__ void MulVectorOnGPU(int *u, int*v, int *w, int N)
   }
 }
 
-
 int main(int argc, char *argv[])
 {
   int N = 1 << 10;
